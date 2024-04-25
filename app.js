@@ -9,27 +9,30 @@ const __clockDiameter   = 300;
 const clockHands = Object.freeze([
     {
         name: 'second hand',
-        chLenght: 140,
-        seconds: 1,
-        ratio: 60,
-        line: null,
-        initLine: function () {this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)}
+        chLenght    : 140,
+        ratio       : 60,   //total number of seconds for a full rotation
+        line        : null,
+        initLine    : function () {
+            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
+        }
     },
     {
         name: 'minute hand',
-        chLenght: 110,
-        seconds: 1 * 60,
-        ratio: 60,
-        line: null,
-        initLine: function () {this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)}
+        chLenght    : 110,
+        ratio       : 60 * 60,
+        line        : null,
+        initLine    : function () {
+            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
+        }
     },
     {
         name: 'hour hand',
-        chLenght: 80,
-        seconds: 1 * 60 * 60,
-        ratio: 12,
-        line: null,
-        initLine: function () {this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)}
+        chLenght    : 80,
+        ratio       : 12 * 60 * 60,
+        line        : null,
+        initLine    : function () {
+            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
+        }
     }
 ]);
 
@@ -53,7 +56,7 @@ const clockHands = Object.freeze([
         const date = new Date();
         const seconds = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 60 * 60;
         clockHands.forEach(clockHand => {
-            clockHand.line.setAttribute('transform', `rotate(${((seconds / clockHand.seconds)%clockHand.ratio)/clockHand.ratio* 360}, ${__clockCenterX} ${__clockCenterY})`);
+            clockHand.line.setAttribute('transform', `rotate(${seconds / clockHand.ratio * 360}, ${__clockCenterX} ${__clockCenterY})`);
         })
     }, 1000)
 })();
