@@ -47,19 +47,23 @@ const clockHands = Object.freeze([
     clockHands.forEach(clockHand => {
             clockHand.initLine();
             svg.appendChild(clockHand.line);
-    })
+    });
+    updateClockHands();
 })();
 
 (function initializeInterval()
 {
-    setInterval(() => {
-        const date = new Date();
-        const seconds = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 60 * 60;
-        clockHands.forEach(clockHand => {
-            clockHand.line.setAttribute('transform', `rotate(${seconds / clockHand.ratio * 360}, ${__clockCenterX} ${__clockCenterY})`);
-        })
-    }, 1000)
+    setInterval(() => { updateClockHands() }, 1000)
 })();
+
+function updateClockHands()
+{
+    const date = new Date();
+    const seconds = date.getSeconds() + date.getMinutes() * 60 + date.getHours() * 60 * 60;
+    clockHands.forEach(clockHand => {
+        clockHand.line.setAttribute('transform', `rotate(${seconds / clockHand.ratio * 360}, ${__clockCenterX} ${__clockCenterY})`);
+    });
+}
 
 function drawCircle(x, y, diameter)
 {
