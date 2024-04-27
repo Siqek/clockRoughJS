@@ -1,10 +1,14 @@
 let roughSvg = rough.svg(document.getElementById('svg'));
 
-var clock = document.getElementById("svgContainer");
+var clockContainer = document.getElementById("svgContainer");
 
-const __clockCenterX    = clock.offsetWidth / 2;
-const __clockCenterY    = clock.offsetHeight / 2;
+const __clockCenterX    = clockContainer.offsetWidth / 2;
+const __clockCenterY    = clockContainer.offsetHeight / 2;
 const __clockDiameter   = 300;
+
+const __initLine = function () {
+    this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght, { strokeWidth: 2 })
+}
 
 const clockHands = Object.freeze([
     {
@@ -12,27 +16,21 @@ const clockHands = Object.freeze([
         chLenght    : 140,
         ratio       : 60,   //total number of seconds for a full rotation
         line        : null,
-        initLine    : function () {
-            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
-        }
+        initLine    : __initLine
     },
     {
         name: 'minute hand',
         chLenght    : 110,
         ratio       : 60 * 60,
         line        : null,
-        initLine    : function () {
-            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
-        }
+        initLine    : __initLine
     },
     {
         name: 'hour hand',
         chLenght    : 80,
         ratio       : 12 * 60 * 60,
         line        : null,
-        initLine    : function () {
-            this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght)
-        }
+        initLine    : __initLine
     }
 ]);
 
@@ -74,3 +72,10 @@ function drawCircle(x, y, diameter)
 
     svg.appendChild(circle);
 }
+
+// function toRadians(degrees)
+// {
+//     return degrees * (Math.PI / 180);
+// }
+
+// console.log('odleglosc miedzy cyframi na tarczy: ', 150/Math.sin(toRadians(75))*Math.sin(toRadians(30)));
