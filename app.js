@@ -2,6 +2,8 @@ let roughSvg = rough.svg(document.getElementById('svg'));
 
 var clockContainer = document.getElementById("svgContainer");
 
+var clockNumbersContainer = document.querySelector("#clockNumbers");
+
 const __clockCenterX    = clockContainer.offsetWidth / 2;
 const __clockCenterY    = clockContainer.offsetHeight / 2;
 const __clockDiameter   = 300;
@@ -79,3 +81,21 @@ function drawCircle(x, y, diameter)
 // }
 
 // console.log('odleglosc miedzy cyframi na tarczy: ', 150/Math.sin(toRadians(75))*Math.sin(toRadians(30)));
+
+function drawNumbers()
+{
+    for (let i = 1; i < 13; i++)
+    {
+        var number = document.createElement('text');
+
+        number.textContent = `${i}`;
+        number.setAttribute("font-family", "Arial");
+        number.setAttribute("font-size", "24");
+        number.setAttribute('x', __clockCenterX + 200);
+        number.setAttribute('y', __clockCenterY);
+
+        clockNumbersContainer.appendChild(number);
+    }
+}
+
+drawNumbers();
