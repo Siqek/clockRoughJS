@@ -2,7 +2,7 @@ let roughSvg = rough.svg(document.getElementById('svg'));
 
 var clockContainer = document.getElementById("svgContainer");
 
-var clockNumbersContainer = document.querySelector("#clockNumbers");
+var clockNumbersContainer = document.getElementById("clockNumbers");
 
 const __clockCenterX    = clockContainer.offsetWidth / 2;
 const __clockCenterY    = clockContainer.offsetHeight / 2;
@@ -51,6 +51,25 @@ const clockHands = Object.freeze([
     updateClockHands();
 })();
 
+(function initializeClockNumbersPos ()
+{
+    let numbers = document.querySelectorAll('.numbers');
+
+    for (let i = 0; i < 12; i++)
+    {
+        let number = numbers[i];
+        number.textContent = `${i + 1}`;
+
+        let bbox = number.getBBox();
+
+        const angle = toRadians((i - 2) * (360 / 12)); // - 2 is the offset to start from 1, not 3
+        const radius = __clockDiameter / 2 * 0.8;
+
+        number.setAttribute("x", __clockCenterX + radius * Math.cos(angle) - bbox.width / 2);
+        number.setAttribute("y", __clockCenterY + radius * Math.sin(angle) + bbox.height / 2);
+    }
+})();
+
 (function initializeInterval()
 {
     setInterval(() => { updateClockHands() }, 1000)
@@ -75,27 +94,29 @@ function drawCircle(x, y, diameter)
     svg.appendChild(circle);
 }
 
-// function toRadians(degrees)
-// {
-//     return degrees * (Math.PI / 180);
-// }
-
-// console.log('odleglosc miedzy cyframi na tarczy: ', 150/Math.sin(toRadians(75))*Math.sin(toRadians(30)));
-
-function drawNumbers()
+function toRadians(degrees)
 {
-    for (let i = 1; i < 13; i++)
-    {
-        var number = document.createElement('text');
-
-        number.textContent = `${i}`;
-        number.setAttribute("font-family", "Arial");
-        number.setAttribute("font-size", "24");
-        number.setAttribute('x', __clockCenterX + 200);
-        number.setAttribute('y', __clockCenterY);
-
-        clockNumbersContainer.appendChild(number);
-    }
+    return degrees * (Math.PI / 180);
 }
 
-drawNumbers();
+// console.log('odleglosc miedzy cyframi na tarczy: ', 150/Math.sin(toRadians(75))*Math.sin(toRadians(30))); //dla d=300 wynosi 77
+
+// function drawNumbers()
+// {
+//     for (let i = 1; i < 13; i++)
+//     {
+//         var number = document.createElement('text');
+
+//         number.textContent = `${i}`;
+//         number.setAttribute("font-family", "Arial");
+//         number.setAttribute("font-size", "24");
+//         number.setAttribute('x', __clockCenterX + 200);
+//         number.setAttribute('y', __clockCenterY);
+//         number.setAttribute('fill', 'black')
+
+//         clockNumbersContainer.appendChild(number);
+//         clockContainer.appendChild(clockNumbersContainer);
+//     }
+// }
+
+// drawNumbers();
