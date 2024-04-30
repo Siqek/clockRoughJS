@@ -9,27 +9,30 @@ const __clockCenterY    = clockContainer.offsetHeight / 2;
 const __clockDiameter   = 300;
 
 const __initLine = function () {
-    this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght, { strokeWidth: 2 })
+    this.line = roughSvg.line(__clockCenterX, __clockCenterY, __clockCenterX, __clockCenterY - this.chLenght, { strokeWidth: this.chWidth })
 }
 
 const clockHands = Object.freeze([
     {
         name: 'second hand',
-        chLenght    : 140,
+        chLenght    : 110,
+        chWidth     : 2,
         ratio       : 60,   //total number of seconds for a full rotation
         line        : null,
         initLine    : __initLine
     },
     {
         name: 'minute hand',
-        chLenght    : 110,
+        chLenght    : 90,
+        chWidth     : 2.5,
         ratio       : 60 * 60,
         line        : null,
         initLine    : __initLine
     },
     {
         name: 'hour hand',
-        chLenght    : 80,
+        chLenght    : 70,
+        chWidth     : 3,
         ratio       : 12 * 60 * 60,
         line        : null,
         initLine    : __initLine
